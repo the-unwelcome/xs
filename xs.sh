@@ -49,10 +49,10 @@ _do_uninstaller () {
 }
 
 main () {
-  if [ "$1" == "-i" ]; then
+  if [ "$1" = "-i" ]; then
     _do_installer
 
-  elif [ "$1" == "-r" ]; then
+  elif [ "$1" = "-r" ]; then
     _do_uninstaller
 
   else
@@ -60,4 +60,4 @@ main () {
   fi
 }
 
-main $1
+main "$1"
