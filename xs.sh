@@ -48,16 +48,22 @@ _do_uninstaller () {
   esac
 }
 
+_help() {
+  echo "xs.sh - Terminal user interface for package managers, written in POSIX sh"
+  echo "Usage: ./xs.sh OPTIONS"
+  echo ""
+  echo "OPTIONS"
+  echo " -i --install    Select packages to install"
+  echo " -r --remove     Select packages to uninstall"
+}
+
 main () {
-  if [ "$1" = "-i" ]; then
-    _do_installer
-
-  elif [ "$1" = "-r" ]; then
-    _do_uninstaller
-
-  else
-    echo "invalid usage"
-  fi
+  case "$1" in
+    "-i"|"--install") _do_installer ;;
+    "-r"|"--remove") _do_uninstaller ;;
+    "-h"|"--help") _help ;;
+    *) echo "Invalid usage" && _help ;;
+  esac
 }
 
 main "$1"
