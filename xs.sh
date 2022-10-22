@@ -1,9 +1,9 @@
 #!/bin/sh
 
 _get_package_manager () {
-  package_managers=('xbps-install' 'pacman' 'apt')
+  set -- xbps-install pacman apt
 
-  for package_manager in "${package_managers[@]}"; do
+  for package_manager in "$@"; do
     if command -v "$package_manager" 2>/dev/null >&2; then
       echo "$package_manager"
     fi
