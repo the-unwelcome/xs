@@ -10,7 +10,7 @@ Terminal user interface for package managers, written in POSIX sh.
 
 ## Installation
 ```sh
-curl -sL https://github.com/the-unwelcome/xs/raw/main/xs.sh  -o xs && chmod a+x xs
+curl -sL https://github.com/the-unwelcome/xs/raw/main/xs.sh -o xs && chmod a+x xs
 ```
 
 ## Uninstallation
