@@ -1,5 +1,5 @@
 # xs
-Terminal user interface for package managers, written in POSIX sh.
+Terminal user interface for package managers, written in POSIX sh. [Credit for the base idea](https://old.reddit.com/r/voidlinux/comments/es8zgf/tiny_convenience_function_i_think_would_be_worth/)!
 
 ## Usage
 `xs [-i/--install]`: launches the installer tui
