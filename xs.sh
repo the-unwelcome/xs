@@ -1,7 +1,20 @@
 #!/bin/sh
 
+_sanitize_zypper_packages () {
+  DIRTY_PACKAGE_TABLE=$(echo "$1" | tail -n +6)
+  DIRTY_PACKAGE_LIST=$(echo "$DIRTY_PACKAGE_TABLE" | cut -d '|' -f -2)
+  PACKAGE_LIST=''
+
+  for pkg in "$DIRTY_PACKAGE_LIST"; do
+    PACKAGE_NAME=$(echo "$pkg" | sed "s:|::g; s: ::g; s:i+::g")
+    PACKAGE_LIST="${PACKAGE_LIST}${PACKAGE_NAME}"
+  done
+
+  echo "$PACKAGE_LIST"
+}
+
 _get_package_manager () {
-  set -- "xbps-install" "pacman" "apt"
+  set -- "xbps-install" "pacman" "apt" "zypper"
 
   for package_manager in "$@"; do
     if command -v "$package_manager" 2>/dev/null >&2; then
@@ -17,6 +30,7 @@ _get_available_packages () {
     "xbps-install") xpkg -a ;;
     "pacman") pacman -Slq ;;
     "apt") apt-cache pkgnames --generate ;;
+    "zypper") _sanitize_zypper_packages "$(zypper search)" ;;
   esac
 }
 
@@ -25,6 +39,7 @@ _get_installed_packages () {
     "xbps-install") xpkg ;;
     "pacman") pacman -Qq ;;
     "apt") dpkg --get-selections | sed 's:install$::' ;;
+    "zypper") _sanitize_zypper_packages "$(zypper search -i)" ;;
   esac
 }
 
@@ -35,6 +50,7 @@ _do_installer () {
     "xbps-install") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "xq {1}" | xargs -ro sudo xbps-install ;;
     "pacman") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "pacman -Si {1}" | xargs -ro sudo pacman -S ;;
     "apt") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "apt-cache show {1}" | xargs -ro sudo apt install ;;
+   "zypper") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "zypper info {1} | tail -n +7" | xargs -ro sudo zypper install
   esac
 }
 
@@ -45,6 +61,7 @@ _do_uninstaller () {
     "xbps-install") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "xq {1}" | xargs -ro sudo xbps-remove ;;
     "pacman") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "pacman -Si {1}" | xargs -ro sudo pacman -R ;;
     "apt") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "apt-cache show {1}" | xargs -ro sudo apt remove ;;
+    "zypper") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "zypper info {1} | tail -n +7" | xargs -ro sudo zypper remove
   esac
 }
 
