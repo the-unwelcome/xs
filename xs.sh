@@ -65,7 +65,7 @@ _do_uninstaller () {
   esac
 }
 
-_help() {
+_help () {
   echo "xs.sh - Terminal user interface for package managers, written in POSIX sh"
   echo "Usage: ./xs.sh OPTIONS"
   echo ""
@@ -75,7 +75,7 @@ _help() {
   echo " -h --help       Prints this message"
 }
 
-main () {
+_main () {
   case "$1" in
     "-i"|"--install") _do_installer ;;
     "-r"|"--remove") _do_uninstaller ;;
@@ -84,4 +84,4 @@ main () {
   esac
 }
 
-main "$1"
+_main "$1"
