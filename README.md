@@ -19,6 +19,10 @@ xbps-install -S xtools
 
 `xs [-h/--help]`: prints help
 
+`xs --yay-install`: launches the aur installer tui
+
+`xs --yay-remove`: launches the aur uninstaller tui
+
 ## Installation
 ```sh
 curl -fsSL https://github.com/the-unwelcome/xs/raw/main/xs.sh -o xs && chmod a+x xs
