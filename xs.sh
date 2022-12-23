@@ -71,13 +71,13 @@ _do_uninstaller () {
 _do_yay_installer () {
   [ "$PACKAGE_MANAGER" != "pacman" ] && echo "You aren't using Arch!" && exit 1
   package_list="$(_get_available_packages 'yay')"
-  echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "yay -Ss {1}" | xargs -ro yay -S
+  echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "yay -Si {1}" | xargs -ro yay -S
 }
 
 _do_yay_uninstaller () {
   [ "$PACKAGE_MANAGER" != "pacman" ] && echo "You aren't using Arch!" && exit 1
   package_list="$(_get_installed_packages 'yay')"
-  echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "yay -Ss {1}" | xargs -ro yay -R
+  echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "yay -Si {1}" | xargs -ro yay -R
 }
 
 _help () {
