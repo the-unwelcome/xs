@@ -27,7 +27,7 @@ _get_package_manager () {
 PACKAGE_MANAGER="$(_get_package_manager)"
 
 _get_available_packages () {
-  [ "$1" = "yay" ] && yay -Slaq | grep -v "$(yay -Qqam)" && return
+  [ "$1" = "yay" ] && yay -Slaq && return
   case "$PACKAGE_MANAGER" in
     "xbps-install") xpkg -a ;;
     "pacman") pacman -Slq ;;
