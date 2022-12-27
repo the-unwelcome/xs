@@ -29,8 +29,8 @@ PACKAGE_MANAGER="$(_get_package_manager)"
 _get_available_packages () {
   [ "$1" = "yay" ] && yay -Slaq | grep -v "$(yay -Qqam)" && return
   case "$PACKAGE_MANAGER" in
-    "xbps-install") xpkg -a | grep -v "$(xpkg)" ;;
-    "pacman") pacman -Slq | grep -v "$(pacman -Qq)" ;;
+    "xbps-install") xpkg -a ;;
+    "pacman") pacman -Slq ;;
     "apt") apt-cache pkgnames --generate ;;
     "zypper") _sanitize_zypper_packages "$(zypper search)" ;;
   esac
