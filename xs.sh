@@ -55,7 +55,7 @@ _do_installer () {
   package_list="$(_get_available_packages)"
 
   case "$PACKAGE_MANAGER" in
-    "xbps-install") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "xq {1}" | xargs -ro doas xbps-install ;;
+    "xbps-install") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "xq {1}" | xargs -ro doas xbps-install -S ;;
     "pacman") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "pacman -Si {1}" | xargs -ro doas pacman -S ;;
     "apt") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "apt-cache show {1}" | xargs -ro doas apt install ;;
     "zypper") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "zypper info {1} | tail -n +7" | xargs -ro doas zypper install
@@ -66,7 +66,7 @@ _do_uninstaller () {
   package_list="$(_get_installed_packages)"
 
   case "$PACKAGE_MANAGER" in
-    "xbps-install") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "xq {1}" | xargs -ro doas xbps-remove ;;
+    "xbps-install") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "xq {1}" | xargs -ro doas xbps-remove -R ;;
     "pacman") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "pacman -Si {1}" | xargs -ro doas pacman -R ;;
     "apt") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "apt-cache show {1}" | xargs -ro doas apt remove ;;
     "zypper") echo "$package_list" | fzf -m --preview-window="right:66%:wrap" --preview "zypper info {1} | tail -n +7" | xargs -ro doas zypper remove
